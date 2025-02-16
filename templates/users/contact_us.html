@@ -1,0 +1,43 @@
+{% extends "users/basic.html" %}
+
+{% block content %}
+    <title>Contact Us - BookMySeat</title>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Contact Us – BookMySeat 📞📧</h1>
+
+        <p>
+            We’re here to help you with any questions, concerns, or feedback. Feel free to reach out to us – we’d love to hear from you!
+        </p>
+
+        <h3>📍 Our Contact Information</h3>
+        <ul class="list-unstyled">
+            <li><strong>Company Name:</strong> BookMySeat Pvt. Ltd.</li>
+            <li><strong>Address:</strong> 123 Cinema Street, Entertainment City, IN-456789</li>
+            <li><strong>Email:</strong> <a href="mailto:support@bookmyseat.com">support@bookmyseat.com</a></li>
+            <li><strong>Helpline:</strong> +91 98765 43210</li>
+            <li><strong>Working Hours:</strong> 9 AM – 9 PM (Mon to Sat)</li>
+        </ul>
+
+        <h3 class="mt-4">💬 Send Us Your Query</h3>
+        <form method="post" action="{% url 'contact_us' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Your Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Your Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="message" class="form-label">Your Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
