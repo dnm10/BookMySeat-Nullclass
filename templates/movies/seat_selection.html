@@ -54,25 +54,16 @@
                 <div class="seat-container">
                   <div class="seat {% if seat.is_booked %}sold{% endif %}">
                     {% if not seat.is_booked %}
-                      <input
-                        type="checkbox"
-                        name="seats"
-                        value="{{ seat.id }}"
-                        class="seat-checkbox"
-                        id="seat-{{ seat.id }}"
-                      />
-                      <label
-                        for="seat-{{ seat.id }}"
-                        class="seat-label"
-                      >
-                        {{ seat.seat_number }}
-                      </label>
+                      <input type="checkbox" name="seats" value="{{ seat.id }}" id="seat-{{ seat.id }}" class="seat-checkbox">
+                      <label for="seat-{{ seat.id }}" class="seat-label">{{ seat.seat_number }}</label>
                     {% else %}
                       <span class="seat-number">{{ seat.seat_number }}</span>
                     {% endif %}
                   </div>
                 </div>
-              {% endfor %}
+                {% empty %}
+              <p>No seats available.</p>
+            {% endfor %}
             </div>
 
             <!-- Seat Legend -->
