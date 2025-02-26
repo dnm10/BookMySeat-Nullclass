@@ -5,15 +5,26 @@ from django.db import IntegrityError
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
+from django.db.models import Count
 
 
 def movie_list(request):
     search_query = request.GET.get('search')
+    movies = Movie.objects.all()
+    recommendations = []
+
     if search_query:
-        movies = Movie.objects.filter(name__icontains=search_query)
-    else:
-        movies = Movie.objects.all()
-    return render(request, 'movies/movie_list.html', {'movies': movies})
+        movies = movies.filter(name__icontains=search_query)
+    
+    if request.user.is_authenticated:
+        user_bookings = Booking.objects.filter(user=request.user)
+        watched_genres = user_bookings.values_list('movie__genre', flat=True).distinct()
+        
+        if watched_genres:
+            recommendations = Movie.objects.filter(genre__in=watched_genres).exclude(id__in=user_bookings.values_list('movie_id', flat=True))
+
+    return render(request, 'movies/movie_list.html', {'movies': movies, 'recommendations': recommendations})
+
 
 def theater_list(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
@@ -104,14 +115,10 @@ Regards,
 Movie Ticket Booking Team
     """
 
-    # recipient_email = user.email
-
     send_mail(
         subject,
         message,
         settings.EMAIL_HOST_USER,
-        ['mahajandeepti830@gmail.com'],
+        [user.email],
         fail_silently=False,
     )
-
-
