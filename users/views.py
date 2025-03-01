@@ -35,16 +35,16 @@ def login_view(request):
 
 @login_required
 def profile(request):
-    bookings= Booking.objects.filter(user=request.user)
-    if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        if u_form.is_valid():
-            u_form.save()
-            return redirect('profile')
-    else:
-        u_form = UserUpdateForm(instance=request.user)
+    user_bookings = Booking.objects.filter(user=request.user).select_related('movie')
+    recommendations = []
 
-    return render(request, 'users/profile.html', {'u_form': u_form,'bookings':bookings})
+    if user_bookings.exists():
+        watched_genres = user_bookings.values_list('movie__genre', flat=True).distinct()
+        if watched_genres:
+            recommendations = Movie.objects.filter(genre__in=watched_genres).exclude(id__in=user_bookings.values_list('movie_id', flat=True))
+
+    return render(request, 'users/profile.html', {'bookings': user_bookings, 'recommendations': recommendations})
+
 
 @login_required
 def reset_password(request):

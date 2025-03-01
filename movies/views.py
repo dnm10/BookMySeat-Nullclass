@@ -20,16 +20,25 @@ def movie_list(request):
         user_bookings = Booking.objects.filter(user=request.user)
         watched_genres = user_bookings.values_list('movie__genre', flat=True).distinct()
         
+        # Fetch genres from the related movies
+        watched_genres = user_bookings.values_list('movie__genre', flat=True).distinct()
+        
         if watched_genres:
             recommendations = Movie.objects.filter(genre__in=watched_genres).exclude(id__in=user_bookings.values_list('movie_id', flat=True))
 
+        # Print to debug
+        print(f"Watched genres: {watched_genres}")
+        print(f"Recommended movies: {recommendations}")
+
     return render(request, 'movies/movie_list.html', {'movies': movies, 'recommendations': recommendations})
+
 
 
 def theater_list(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     theaters = Theater.objects.filter(movie=movie)
     return render(request, 'movies/theater_list.html', {'movie': movie, 'theaters': theaters})
+
 
 
 @login_required(login_url='/login/')
