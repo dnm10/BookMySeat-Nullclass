@@ -2,6 +2,6 @@ asgiref==3.7.2
 dj-database-url
 Django==3.2.19
 gunicorn==20.1.0
-psycopg2-binary == 25.0
+psycopg2-binary==2.9.10
 sqlparse==0.4.4
 typing_extensions==4.7.0
