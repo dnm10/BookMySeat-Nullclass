@@ -49,7 +49,7 @@ python manage.py createsuperuser
 Run the development server:
 python manage.py runserver
 
-Visit http://127.0.0.1:8000/ in your browser.
+Visit https://book-my-seat-sigma.vercel.app/ in your browser.
 
 🚨 How to Use
 
