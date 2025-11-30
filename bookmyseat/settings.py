@@ -90,12 +90,26 @@ WSGI_APPLICATION = 'bookmyseat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(DATABASE_URL,'DATABASE_URL', 'postgresql://django_bookmyshow_ltpj_user:XgdFpS7poaxdWgAEZLBQ2fHrVaqDAvbz@dpg-cunmidi3esus73ckni70-a.oregon-postgres.render.com/django_bookmyshow_ltpj', conn_max_age=600, ssl_require=True)
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 # DATABASES['default'] = dj_database_url.parse(
 #         os.getenv('DATABASE_URL', 'postgresql://django_bookmyshow_ltpj_user:XgdFpS7poaxdWgAEZLBQ2fHrVaqDAvbz@dpg-cunmidi3esus73ckni70-a.oregon-postgres.render.com/django_bookmyshow_ltpj'),
 #         conn_max_age=600,
