@@ -96,8 +96,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-DATABASES['default'] = dj_database_url.parse('postgresql://django_bookmyshow_ltpj_user:XgdFpS7poaxdWgAEZLBQ2fHrVaqDAvbz@dpg-cunmidi3esus73ckni70-a.oregon-postgres.render.com/django_bookmyshow_ltpj')
-
+# DATABASES['default'] = dj_database_url.parse(
+#         os.getenv('DATABASE_URL', 'postgresql://django_bookmyshow_ltpj_user:XgdFpS7poaxdWgAEZLBQ2fHrVaqDAvbz@dpg-cunmidi3esus73ckni70-a.oregon-postgres.render.com/django_bookmyshow_ltpj'),
+#         conn_max_age=600,
+#         ssl_require=True
+#     )
 
 
 # Password validation
